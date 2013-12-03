@@ -6,6 +6,7 @@ public class Board {
 	
 	final String[][] board;
 	final Set<String> tiles = new HashSet<String>();
+	boolean isCheckerBoard = false;
 	
 	private void hline(StringBuilder buf)
 	{
@@ -20,12 +21,18 @@ public class Board {
 
 	public Board(int rows, int cols)
 	{
+		this(rows, cols, false);
+	}
+	
+	public Board(int rows, int cols, boolean isCheckerBoard)
+	{
 		if (rows <= 0 || cols <= 0)
 		{
 			throw new IllegalArgumentException("rows|cols <= 0");
 		}
 		
 		board = new String[rows][cols];
+		this.isCheckerBoard = isCheckerBoard; 
 	}
 	
 	public int width()
@@ -60,7 +67,16 @@ public class Board {
 			{
 				String item = board[y][x];
 				
-				buf.append(item == null ? "  " : board[y][x]);
+				String color = getColor(x, y);
+				if (color == null)
+				{
+					buf.append(item == null ? "  " : board[y][x]);
+				}
+				else
+				{
+					buf.append(item == null ? " " + color.toLowerCase() : board[y][x]);
+				}
+				
 				buf.append("|");
 			}
 			
@@ -70,6 +86,16 @@ public class Board {
 		}
 		
 		return buf.toString();
+	}
+
+	private String getColor(int x, int y)
+	{
+		if (isCheckerBoard)
+		{
+			return (x % 2 + y % 2) % 2 == 0 ? "X" : "O"; 
+		}
+		
+		return null;
 	}
 
 	public int freeBlocks()

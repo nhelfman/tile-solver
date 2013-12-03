@@ -77,6 +77,14 @@ public class Test1
 	}
 	
 	@Test
+	public void testBoard2() 
+	{
+		Board b = new Board(3, 3, true);
+		System.out.println(b);
+		assertEquals(9, b.freeBlocks());
+	}
+	
+	@Test
 	public void testPut1() 
 	{
 		Board b = new Board(3,3);
@@ -131,7 +139,7 @@ public class Test1
 	@Test (expected=IllegalStateException.class)
 	public void testPut2() 
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 		
 		t2.pos(1, 1);
 		b.put(t2);
