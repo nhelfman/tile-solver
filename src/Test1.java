@@ -183,7 +183,7 @@ public class Test1
 	@Test
 	public void testRemove1() 
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 	
 		t1.pos(0, 0);
 		b.put(t1);
@@ -197,7 +197,7 @@ public class Test1
 	@Test (expected=IllegalStateException.class)
 	public void testRemove2() 
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 		
 		t1.pos(0, 0);
 		b.put(t1);
@@ -209,7 +209,7 @@ public class Test1
 	@Test
 	public void testSolver1()
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 		
 		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t1, t2, t3, t4}));
 				
@@ -222,7 +222,7 @@ public class Test1
 	@Test
 	public void testSolver2()
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 		
 		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t4, t3, t2, t1}));
 				
@@ -235,9 +235,48 @@ public class Test1
 	@Test
 	public void testSolver3()
 	{
-		Board b = new Board(3,3);
+		Board b = new Board(3, 3);
 		
 		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t3, t2, t1, t4}));
+				
+		Solver solver = new Solver(b, tiles);
+		
+		boolean result = solver.solve();
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testSolverCheckerBoard()
+	{
+		Board b = new Board(3, 3);
+		
+		Tile c1 = new Tile("1", new String[][] 
+				{
+					{"O", "X"},
+					{"X"}
+				}
+		);
+		
+		Tile c2 = new Tile("2", new String[][] 
+				{
+					{"O"}
+				}
+		);
+		
+		Tile c3 = new Tile("3", new String[][] 
+				{
+					{"O"},
+					{"X"},
+				}
+		);
+		
+		Tile c4 = new Tile("4", new String[][] 
+				{
+					{"O", "X", "O"}
+				}
+		);
+		
+		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{c1, c2, c3, c4}));
 				
 		Solver solver = new Solver(b, tiles);
 		
