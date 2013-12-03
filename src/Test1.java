@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-
+/*
+ * Basic testing
+ */
 public class Test1 
 {
 	Tile t1 = new Tile("1", new String[][] 
