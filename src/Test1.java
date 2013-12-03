@@ -149,6 +149,38 @@ public class Test1
 	}
 	
 	@Test
+	public void testPutCheckerBoard() 
+	{
+		Board b = new Board(3, 3, true);
+		
+		Tile t = new Tile("1", new String[][] 
+				{
+					{"O", "X"},
+					{"X"}
+				}
+		);
+		
+		t.pos(0, 0);
+		assertFalse(b.put(t));
+		
+		t.pos(1, 1);
+		assertFalse(b.put(t));
+		
+		t.pos(1, 0);
+		assertTrue(b.put(t));
+		System.out.println(b);
+		b.remove(t);
+		
+		
+		t.pos(0, 1);
+		assertTrue(b.put(t));
+		System.out.println(b);
+		b.remove(t);
+		
+		
+	}
+	
+	@Test
 	public void testRemove1() 
 	{
 		Board b = new Board(3,3);

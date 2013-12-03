@@ -157,6 +157,11 @@ public class Board {
 				{
 					return false;
 				}
+				
+				if (isCheckerBoard && !getColor(x + xPos, y + yPos).equals(item))
+				{
+					return false;
+				}
 			}
 		}
 		
