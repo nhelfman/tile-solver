@@ -15,6 +15,18 @@ public class Solver
 	
 	public boolean solve()
 	{
+		int totalTilesBlocks = 0;
+		for(Tile t : tiles)
+		{
+			totalTilesBlocks += t.count;
+		}
+		
+		if (board.freeBlocks() != totalTilesBlocks)
+		{
+			// available blocks on board does not match total number of tile blocks therefore there is no solution
+			return false;
+		}
+		
 		return solve(tiles);
 	}
 	
@@ -47,23 +59,31 @@ public class Solver
 					{
 						tile.pos(x, y);
 
-						System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
-						if (board.put(tile))
+						for (int flips = 0; flips < 2; flips++)
 						{
-							System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
-							System.out.println("Board:\n" + board);
-							tilePlaced = true;
-
-							if (solve(remaining))
+							System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+							if (board.put(tile))
 							{
-								return true;
-							} 
-							else
-							{
-								System.out.println("Removing tile " + tile.getName());
-								board.remove(tile);
+								System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
+								System.out.println("Board:\n" + board);
+								tilePlaced = true;
+	
+								if (solve(remaining))
+								{
+									return true;
+								} 
+								else
+								{
+									System.out.println("Removing tile " + tile.getName());
+									board.remove(tile);
+								}
 							}
+							
+							System.out.println("Flipping tile");
+							tile.hflip();
 						}
+						
+						tile.hflip(); // flip back to original position
 					}
 				}
 				

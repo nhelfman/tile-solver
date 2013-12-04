@@ -15,7 +15,7 @@ public class Test1
 	Tile t1 = new Tile("1", new String[][] 
 			{
 				{"X", "X"},
-				{"X"}
+				{"X", null}
 			}
 	);
 	
@@ -44,8 +44,8 @@ public class Test1
 		Tile t = new Tile("t", new String[][] 
 				{
 					{"X", "X", "X"},
-					{"X", "X"},
-					{"X"}
+					{"X", "X", null},
+					{"X", null, null}
 				}
 		);
 
@@ -66,6 +66,44 @@ public class Test1
 		);
 		
 		assertEquals(1, t.count);
+	}
+	
+	@Test
+	public void testTileHfilp()
+	{
+		Tile t = new Tile("t", new String[][] 
+				{
+					{"O", "X", "O", "X"},
+					{"X", "O", null, null},
+					{"O", null, null, null}
+				}
+		);
+		
+		t.hflip();
+		
+		System.out.println(t);
+		
+		t.hflip();
+		
+		System.out.println(t);
+		
+		Tile t2 = new Tile("t2", new String[][] 
+				{
+					{"O", "X"}
+				}
+		);
+		
+		t2.hflip();
+		System.out.println(t2);
+		
+		Tile t3 = new Tile("t3", new String[][] 
+				{
+					{"O"}
+				}
+		);
+		
+		t3.hflip();
+		System.out.println(t3);
 	}
 	
 	@Test
@@ -156,7 +194,7 @@ public class Test1
 		Tile t = new Tile("1", new String[][] 
 				{
 					{"O", "X"},
-					{"X"}
+					{"X", null}
 				}
 		);
 		
@@ -246,6 +284,40 @@ public class Test1
 	}
 	
 	@Test
+	public void testSolverWithFlip()
+	{
+		Board b = new Board(3, 3);
+		
+		Tile t1 = new Tile("1", new String[][] 
+				{
+					{"X", "X", "X"},
+					{"X", null, null}
+				}
+		);
+		
+		// this one has to be fliped for a solution to exist
+		Tile t2 = new Tile("2", new String[][] 
+				{
+					{"X", null, null},
+					{"X", "X", "X"},
+				}
+		);
+		
+		Tile t3 = new Tile("3", new String[][] 
+				{
+					{"X"}
+				}
+		);
+		
+		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t1, t2, t3}));
+				
+		Solver solver = new Solver(b, tiles);
+		
+		boolean result = solver.solve();
+		assertTrue(result);
+	}
+	
+	@Test
 	public void testSolverCheckerBoard()
 	{
 		Board b = new Board(3, 3);
@@ -253,7 +325,7 @@ public class Test1
 		Tile c1 = new Tile("1", new String[][] 
 				{
 					{"O", "X"},
-					{"X"}
+					{"X", null}
 				}
 		);
 		
