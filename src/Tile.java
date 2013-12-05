@@ -100,6 +100,13 @@ public class Tile
 			}
 		}
 	}
+
+
+	public void rotate()
+	{
+
+		
+	}
 	
 	
 }

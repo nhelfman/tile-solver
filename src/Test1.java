@@ -107,6 +107,33 @@ public class Test1
 	}
 	
 	@Test
+	public void testTileRotate()
+	{
+		Tile t = new Tile("t", new String[][] 
+				{
+					{"O", "X", "O", "X"},
+					{"X", "O", null, null},
+					{"O", null, null, null}
+				}
+		);
+		
+		t.rotate();
+		
+		System.out.println(t);
+		
+		assertEquals(
+				new Tile("t", new String[][] 
+				{
+					{"O",  "X",  "O"},
+					{null, "O",  "X"},
+					{null, null, "O"},
+					{null, null, "X"}
+				}),
+				t);
+		
+	}
+	
+	@Test
 	public void testBoard() 
 	{
 		Board b = new Board(3,3);
@@ -349,6 +376,42 @@ public class Test1
 		);
 		
 		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{c1, c2, c3, c4}));
+				
+		Solver solver = new Solver(b, tiles);
+		
+		boolean result = solver.solve();
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testSolverRotate()
+	{
+		// create puzzle that cannot be solved without rotating a tile
+		Board b = new Board(3, 3);
+		
+		Tile t1 = new Tile("1", new String[][] 
+				{
+					{"X", "X", "X"},
+				}
+		);
+		
+		Tile t2 = new Tile("2", new String[][] 
+				{
+					{"X", "X", "X"},
+				}
+		);
+		
+		Tile t3 = new Tile("3", new String[][] 
+				{
+					{"X"},
+					{"X"},
+					{"X"},
+				}
+		);
+		
+		
+		
+		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t1, t2, t3}));
 				
 		Solver solver = new Solver(b, tiles);
 		
