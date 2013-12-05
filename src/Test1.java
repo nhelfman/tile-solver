@@ -320,18 +320,18 @@ public class Test1
 	@Test
 	public void testSolverCheckerBoard()
 	{
-		Board b = new Board(3, 3);
+		Board b = new Board(3, 3, true);
 		
 		Tile c1 = new Tile("1", new String[][] 
 				{
-					{"O", "X"},
-					{"X", null}
+					{"X", "O"},
+					{"O", null}
 				}
 		);
 		
 		Tile c2 = new Tile("2", new String[][] 
 				{
-					{"O"}
+					{"X"}
 				}
 		);
 		
@@ -344,7 +344,7 @@ public class Test1
 		
 		Tile c4 = new Tile("4", new String[][] 
 				{
-					{"O", "X", "O"}
+					{"X", "O", "X"}
 				}
 		);
 		
