@@ -117,19 +117,23 @@ public class Test1
 				}
 		);
 		
+		System.out.println("base:" + t);
+		
 		t.rotate();
 		
-		System.out.println(t);
+		System.out.println("rotated:" + t);
 		
-		assertEquals(
-				new Tile("t", new String[][] 
+		Tile expected = new Tile("t", new String[][] 
 				{
-					{"O",  "X",  "O"},
-					{null, "O",  "X"},
-					{null, null, "O"},
-					{null, null, "X"}
-				}),
-				t);
+				{"O",  "X",  "O"},
+				{null, "O",  "X"},
+				{null, null, "O"},
+				{null, null, "X"}
+			});
+		
+		System.out.println("expected:" + t);
+		
+		assertEquals(expected, t);
 		
 	}
 	

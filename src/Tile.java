@@ -1,13 +1,13 @@
 
 public class Tile 
 {
-	private final String[][] blocks;
+	private String[][] blocks;
 	private final String name;
 	public final int count;
 
 	public int x;
 	public int y;
-	
+		
 	public Tile(String name, String[][] blocks)
 	{
 		if (blocks.length == 0)
@@ -41,6 +41,7 @@ public class Tile
 		}
 		
 		count = blocksCount;
+		
 	}
 	
 	
@@ -58,7 +59,7 @@ public class Tile
 			for (int j=0; j < blocks[i].length; j++)
 			{
 				String block = blocks[i][j];
-				buf.append(block == null ? "   " : blocks[i][j] + name + " ");
+				buf.append(block == null ? " . " : blocks[i][j] + name + " ");
 			}
 			
 			buf.append("\n");
@@ -80,15 +81,6 @@ public class Tile
 	
 	public void hflip()
 	{
-		int width = blocks[0].length;
-		for (int y=0; y < blocks.length; y++)
-		{
-			if (blocks[y].length > width)
-			{
-				width = blocks[y].length;
-			}
-		}
-		
 		for (int y=0; y < blocks.length; y++)
 		{
 			for (int x=0; x < blocks[y].length / 2; x++)
@@ -104,8 +96,17 @@ public class Tile
 
 	public void rotate()
 	{
-
+		String[][] rotated = new String[blocks[0].length][blocks.length];
 		
+		for (int i=0; i < blocks[0].length; i++)
+		{
+			for (int j=blocks.length - 1; j >= 0; j--)
+			{
+				rotated[i][rotated[0].length - 1 - j] = blocks[j][i];
+			}
+		}
+		
+		blocks = rotated;
 	}
 	
 	
