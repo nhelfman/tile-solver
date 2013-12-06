@@ -1,3 +1,5 @@
+package nhelfman.puzzles.tilessolver;
+
 import java.util.HashSet;
 import java.util.Set;
 

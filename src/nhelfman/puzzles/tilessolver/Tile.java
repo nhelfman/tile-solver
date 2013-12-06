@@ -1,3 +1,4 @@
+package nhelfman.puzzles.tilessolver;
 
 public class Tile 
 {

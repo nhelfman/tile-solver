@@ -1,8 +1,14 @@
+package nhelfman.puzzles.tilessolver.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+
+import nhelfman.puzzles.tilessolver.Board;
+import nhelfman.puzzles.tilessolver.Solver;
+import nhelfman.puzzles.tilessolver.Tile;
 
 import org.junit.Test;
 

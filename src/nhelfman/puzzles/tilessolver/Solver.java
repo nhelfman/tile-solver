@@ -1,5 +1,8 @@
+package nhelfman.puzzles.tilessolver;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class Solver
