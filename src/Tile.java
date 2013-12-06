@@ -51,6 +51,7 @@ public class Tile
 	}
 
 
+	@Override
 	public String toString()
 	{
 		StringBuilder buf = new StringBuilder();
@@ -67,6 +68,55 @@ public class Tile
 		
 		return "[" + x + "," + y + "]:\n" + buf.toString();
 	}
+
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj != null && obj instanceof Tile)
+		{
+			Tile other = (Tile)obj;
+			if (blocks.length != other.blocks.length)
+			{
+				return false;
+			}
+			
+			if (blocks[0].length != other.blocks[0].length)
+			{
+				return false;
+			}
+			
+			for (int i=0; i < blocks.length; i++)
+			{
+				for (int j=0; j < blocks[i].length; j++)
+				{
+					String block = blocks[i][j];
+					String otherBlock = other.blocks[i][j];
+					
+					if (block != null && otherBlock != null)
+					{
+						if (!block.equals(otherBlock))
+						{
+							return false;
+						}
+					}
+					else if (block == null && otherBlock != null)
+					{
+						return false;
+					} 
+					else if(block != null && otherBlock == null)
+					{
+						return false;
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+
 
 	public String[][] getBlocks()
 	{

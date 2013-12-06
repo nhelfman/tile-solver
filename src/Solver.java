@@ -41,7 +41,6 @@ public class Solver
 			System.out.println("--------------------------------------------------");
 			System.out.print("level: " + level + " remaining ");
 			printTiles(remaining);
-			
 
 			List<Tile> removed = new ArrayList<Tile>();
 			
@@ -61,29 +60,33 @@ public class Solver
 
 						for (int flips = 0; flips < 2; flips++)
 						{
-							System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
-							if (board.put(tile))
+							for (int i=0; i < 4; i++)
 							{
-								System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
-								System.out.println("Board:\n" + board);
-								tilePlaced = true;
-	
-								if (solve(remaining))
+								System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+								if (board.put(tile))
 								{
-									return true;
-								} 
-								else
-								{
-									System.out.println("Removing tile " + tile.getName());
-									board.remove(tile);
+									System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
+									System.out.println("Board:\n" + board);
+									tilePlaced = true;
+
+									if (solve(remaining))
+									{
+										return true;
+									} 
+									else
+									{
+										System.out.println("Removing tile " + tile.getName());
+										board.remove(tile);
+									}
 								}
+								
+								System.out.println("Rotating tile");
+								tile.rotate();
 							}
 							
 							System.out.println("Flipping tile");
 							tile.hflip();
 						}
-						
-						tile.hflip(); // flip back to original position
 					}
 				}
 				

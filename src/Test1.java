@@ -119,9 +119,9 @@ public class Test1
 		
 		System.out.println("base:" + t);
 		
-		t.rotate();
+		t.rotate(); // 1
 		
-		System.out.println("rotated:" + t);
+		System.out.println("rotated 1:" + t);
 		
 		Tile expected = new Tile("t", new String[][] 
 				{
@@ -131,9 +131,55 @@ public class Test1
 				{null, null, "X"}
 			});
 		
-		System.out.println("expected:" + t);
+		System.out.println("expected 1:" + t);
 		
 		assertEquals(expected, t);
+		
+		t.rotate(); // 2
+		
+		System.out.println("rotated 2:" + t);
+		
+		Tile expected2 = new Tile("t", new String[][] 
+				{
+				{null, null, null,"O"},
+				{null, null, "O", "X"},
+				{"X",  "O",  "X", "O"},
+			});
+		
+		System.out.println("expected 2:" + t);
+		
+		assertEquals(expected2, t);
+		
+		t.rotate(); // 3
+		
+		System.out.println("rotated 3:" + t);
+		
+		Tile expected3 = new Tile("t", new String[][] 
+				{
+				{"X", null, null},
+				{"O", null, null},
+				{"X", "O",  null},
+				{"O", "X", "O"}
+			});
+		
+		System.out.println("expected 3:" + t);
+		
+		assertEquals(expected3, t);
+		
+		t.rotate(); // 4
+		
+		System.out.println("rotated 4:" + t);
+		
+		Tile expected4 = new Tile("t", new String[][] 
+				{
+				{"O", "X", "O", "X"},
+				{"X", "O", null, null},
+				{"O", null, null, null}
+			});
+		
+		System.out.println("expected 4:" + t);
+		
+		assertEquals(expected4, t);
 		
 	}
 	
