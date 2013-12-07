@@ -83,7 +83,7 @@ public class Solver
 								
 								iteration++;
 								
-								if (iteration % 1000000 == 0)
+								if (iteration % 10000000 == 0)
 								{
 									long elapsed = System.currentTimeMillis() - start + 1;
 									long rate = iteration * 1000L / elapsed;

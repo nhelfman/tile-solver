@@ -6,6 +6,10 @@ public class Tile
 	private final String name;
 	public final int count;
 
+	private int currentRot = 0;
+	private String[][][] rotations = new String[4][][];
+	
+	
 	public int x;
 	public int y;
 		
@@ -15,7 +19,6 @@ public class Tile
 		{
 			throw new IllegalArgumentException("height == 0");
 		}
-		
 		
 		this.name = name;
 		this.blocks = blocks;
@@ -42,7 +45,6 @@ public class Tile
 		}
 		
 		count = blocksCount;
-		
 	}
 	
 	
@@ -147,15 +149,26 @@ public class Tile
 
 	public void rotate()
 	{
-		String[][] rotated = new String[blocks[0].length][blocks.length];
+		String[][] rotated = rotations[currentRot];
 		
-		for (int i=0; i < blocks[0].length; i++)
+		if (rotated == null)
 		{
-			for (int j=blocks.length - 1; j >= 0; j--)
+			rotated = new String[blocks[0].length][blocks.length];
+			
+			for (int i=0; i < blocks[0].length; i++)
 			{
-				rotated[i][rotated[0].length - 1 - j] = blocks[j][i];
+				for (int j=blocks.length - 1; j >= 0; j--)
+				{
+					rotated[i][rotated[0].length - 1 - j] = blocks[j][i];
+				}
 			}
+			
+			// cache computed rotation
+			rotations[currentRot] = rotated;
 		}
+		
+		currentRot++;
+		currentRot %= 4;
 		
 		blocks = rotated;
 	}
