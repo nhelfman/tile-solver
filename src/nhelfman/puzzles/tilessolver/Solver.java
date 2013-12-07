@@ -9,7 +9,7 @@ public class Solver
 {
 	private final Board board;
 	private final List<Tile> tiles;
-	private int iteration;
+	private long iteration;
 	private long start;
 	private final boolean debug;
 	
@@ -55,16 +55,23 @@ public class Solver
 		{
 			level++;
 
-			debugln("--------------------------------------------------");
-			debug("level: " + level + " remaining ");
-			printTiles(remaining);
-
+			if (debug)
+			{
+				debugln("--------------------------------------------------");
+				debug("level: " + level + " remaining ");
+				printTiles(remaining);
+			}
+			
 			List<Tile> removed = new ArrayList<Tile>();
 			
 			while (remaining.size() > 0)
 			{
 				Tile tile = remaining.remove(0);
-				debugln("got tile: " + tile.getName());
+				
+				if (debug)
+				{
+					debugln("got tile: " + tile.getName());
+				}
 				
 				removed.add(tile);
 				
@@ -79,22 +86,29 @@ public class Solver
 						{
 							for (int i=0; i < 4; i++)
 							{
-								debugln("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+								if (tilePlaced)
+								{
+									debugln("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+								}
 								
 								iteration++;
 								
 								if (iteration % 10000000 == 0)
 								{
 									long elapsed = System.currentTimeMillis() - start + 1;
-									long rate = iteration * 1000L / elapsed;
+									long rate = iteration * 1000L / (long)elapsed;
 									
 									System.out.println(">>>rate=" + rate + " tries/s");
 								}
 								
 								if (board.put(tile))
 								{
-									debugln("Safe put tile " + tile.getName() + "\n" + tile);
-									debugln("Board:\n" + board);
+									if (debug)
+									{
+										debugln("Safe put tile " + tile.getName() + "\n" + tile);
+										debugln("Board:\n" + board);
+									}
+									
 									tilePlaced = true;
 
 									if (solve(remaining))
@@ -103,16 +117,28 @@ public class Solver
 									} 
 									else
 									{
-										debugln("Removing tile " + tile.getName());
+										if (debug)
+										{
+											debugln("Removing tile " + tile.getName());
+										}
+										
 										board.remove(tile);
 									}
 								}
 								
-								debugln("Rotating tile");
+								if (debug)
+								{
+									debugln("Rotating tile");
+								}
+								
 								tile.rotate();
 							}
 							
-							debugln("Flipping tile");
+							if (debug)
+							{
+								debugln("Flipping tile");
+							}
+							
 							tile.hflip();
 						}
 					}
@@ -120,8 +146,11 @@ public class Solver
 				
 				if (!tilePlaced)
 				{
-					// we searched everywhere and failed to put it any place
-					debugln("Did not place tile " + tile.getName());
+					if (debug)
+					{
+						// we searched everywhere and failed to put it any place
+						debugln("Did not place tile " + tile.getName());
+					}
 				}
 			}
 			
@@ -131,11 +160,14 @@ public class Solver
 				return true;
 			}
 			
-			debugln("No solution found");
+			if (debug)
+			{
+				debugln("No solution found");
+				debug("Adding removed ");
+				printTiles(removed);
+			}
 			
 			// add back tiles that were removed
-			debug("Adding removed ");
-			printTiles(removed);
 			for (Tile t : removed)
 			{
 				remaining.add(t);
@@ -151,12 +183,15 @@ public class Solver
 
 	private void printTiles(List<Tile> tiles)
 	{
-		debug("tiles: [");
-		for (Tile t : tiles)
+		if (debug)
 		{
-			debug(t.getName() + " ");
+			debug("tiles: [");
+			for (Tile t : tiles)
+			{
+				debug(t.getName() + " ");
+			}
+			debugln("]");
 		}
-		debugln("]");
 	}
 	
 	

@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class Board {
+public class Board 
+{
 	
 	final String[][] board;
 	final Set<String> tiles = new HashSet<String>();
