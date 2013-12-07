@@ -11,11 +11,18 @@ public class Solver
 	private final List<Tile> tiles;
 	private int iteration;
 	private long start;
+	private final boolean debug;
 	
 	public Solver(Board board, List<Tile> tiles)
 	{
+		this(board, tiles, true /* debug on by default*/);
+	}
+	
+	public Solver(Board board, List<Tile> tiles, boolean debug)
+	{
 		this.board = board;
 		this.tiles = tiles;
+		this.debug = debug;
 	}
 	
 	public boolean solve()
@@ -48,8 +55,8 @@ public class Solver
 		{
 			level++;
 
-			System.out.println("--------------------------------------------------");
-			System.out.print("level: " + level + " remaining ");
+			debugln("--------------------------------------------------");
+			debug("level: " + level + " remaining ");
 			printTiles(remaining);
 
 			List<Tile> removed = new ArrayList<Tile>();
@@ -57,7 +64,7 @@ public class Solver
 			while (remaining.size() > 0)
 			{
 				Tile tile = remaining.remove(0);
-				System.out.println("got tile: " + tile.getName());
+				debugln("got tile: " + tile.getName());
 				
 				removed.add(tile);
 				
@@ -72,22 +79,22 @@ public class Solver
 						{
 							for (int i=0; i < 4; i++)
 							{
-								System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+								debugln("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
 								
 								iteration++;
 								
-								if (iteration % 1000 == 0)
+								if (iteration % 1000000 == 0)
 								{
 									long elapsed = System.currentTimeMillis() - start + 1;
-									long rate = iteration * 1000 / elapsed;
+									long rate = iteration * 1000L / elapsed;
 									
 									System.out.println(">>>rate=" + rate + " tries/s");
 								}
 								
 								if (board.put(tile))
 								{
-									System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
-									System.out.println("Board:\n" + board);
+									debugln("Safe put tile " + tile.getName() + "\n" + tile);
+									debugln("Board:\n" + board);
 									tilePlaced = true;
 
 									if (solve(remaining))
@@ -96,16 +103,16 @@ public class Solver
 									} 
 									else
 									{
-										System.out.println("Removing tile " + tile.getName());
+										debugln("Removing tile " + tile.getName());
 										board.remove(tile);
 									}
 								}
 								
-								System.out.println("Rotating tile");
+								debugln("Rotating tile");
 								tile.rotate();
 							}
 							
-							System.out.println("Flipping tile");
+							debugln("Flipping tile");
 							tile.hflip();
 						}
 					}
@@ -114,7 +121,7 @@ public class Solver
 				if (!tilePlaced)
 				{
 					// we searched everywhere and failed to put it any place
-					System.out.println("Did not place tile " + tile.getName());
+					debugln("Did not place tile " + tile.getName());
 				}
 			}
 			
@@ -124,10 +131,10 @@ public class Solver
 				return true;
 			}
 			
-			System.out.println("No solution found");
+			debugln("No solution found");
 			
 			// add back tiles that were removed
-			System.out.print("Adding removed ");
+			debug("Adding removed ");
 			printTiles(removed);
 			for (Tile t : removed)
 			{
@@ -144,11 +151,28 @@ public class Solver
 
 	private void printTiles(List<Tile> tiles)
 	{
-		System.out.print("tiles: [");
+		debug("tiles: [");
 		for (Tile t : tiles)
 		{
-			System.out.print(t.getName() + " ");
+			debug(t.getName() + " ");
 		}
-		System.out.println("]");
+		debugln("]");
+	}
+	
+	
+	private void debugln(String s)
+	{
+		if (debug )
+		{
+			System.out.println(s);
+		}
+	}
+	
+	private void debug(String s)
+	{
+		if (debug )
+		{
+			System.out.print(s);
+		}
 	}
 }

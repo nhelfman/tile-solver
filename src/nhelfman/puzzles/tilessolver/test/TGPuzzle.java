@@ -125,7 +125,7 @@ public class TGPuzzle
 		List<Tile> tiles = new ArrayList(Arrays.asList(new Tile[]{t1, t2, t3, t4, t5, t6, t7, t8, t9, tA, tB, tC}));
 		
 		Board b = new Board(8, 8, true);
-		Solver solver = new Solver(b, tiles);
+		Solver solver = new Solver(b, tiles, false);
 		
 		boolean result = solver.solve();
 		
