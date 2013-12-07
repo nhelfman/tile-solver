@@ -9,6 +9,8 @@ public class Solver
 {
 	private final Board board;
 	private final List<Tile> tiles;
+	private int iteration;
+	private long start;
 	
 	public Solver(Board board, List<Tile> tiles)
 	{
@@ -18,6 +20,9 @@ public class Solver
 	
 	public boolean solve()
 	{
+		
+		start = System.currentTimeMillis();
+		
 		int totalTilesBlocks = 0;
 		for(Tile t : tiles)
 		{
@@ -29,6 +34,8 @@ public class Solver
 			// available blocks on board does not match total number of tile blocks therefore there is no solution
 			return false;
 		}
+		
+		iteration = 0;
 		
 		return solve(tiles);
 	}
@@ -66,6 +73,17 @@ public class Solver
 							for (int i=0; i < 4; i++)
 							{
 								System.out.println("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
+								
+								iteration++;
+								
+								if (iteration % 1000 == 0)
+								{
+									long elapsed = System.currentTimeMillis() - start + 1;
+									long rate = iteration * 1000 / elapsed;
+									
+									System.out.println(">>>rate=" + rate + " tries/s");
+								}
+								
 								if (board.put(tile))
 								{
 									System.out.println("Safe put tile " + tile.getName() + "\n" + tile);
