@@ -1,17 +1,38 @@
 package nhelfman.puzzles.tilessolver;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 
 public class Solver
 {
+	class Context
+	{
+		int x;
+		int y;
+		int flip;
+		int rotation;
+		String name;
+		
+		@Override
+		public String toString()
+		{
+			return name + " [" + x + "," + y + "] flip: " + flip + " rot: " + rotation;
+		}
+		
+		
+	}
+	
 	private final Board board;
 	private final List<Tile> tiles;
 	private long iteration;
 	private long start;
 	private final boolean debug;
+	
+	private Context level1Context = new Context();
 	
 	public Solver(Board board, List<Tile> tiles)
 	{
@@ -47,7 +68,7 @@ public class Solver
 		return solve(tiles);
 	}
 	
-	static int level = 0;
+	int level = 0;
 	
 	private boolean solve(List<Tile> remaining)
 	{
@@ -84,22 +105,17 @@ public class Solver
 
 						for (int flips = 0; flips < 2; flips++)
 						{
-							for (int i=0; i < 4; i++)
+							for (int rotation=0; rotation < 4; rotation++)
 							{
 								if (tilePlaced)
 								{
 									debugln("Try put tile " + tile.getName() + " at [" + tile.x + "," + tile.y + "]");
 								}
 								
-								iteration++;
 								
-								if (iteration % 10000000 == 0)
-								{
-									long elapsed = System.currentTimeMillis() - start + 1;
-									long rate = iteration * 1000L / (long)elapsed;
-									
-									System.out.println(">>>rate=" + rate + " tries/s");
-								}
+								printProgress(tile, flips, rotation);
+								
+								iteration++;
 								
 								if (board.put(tile))
 								{
@@ -178,6 +194,31 @@ public class Solver
 		finally
 		{
 			level--;
+		}
+	}
+
+	private void printProgress(Tile tile, int flips, int rotation)
+	{
+		if (level == 1)
+		{
+			level1Context.x = tile.x;
+			level1Context.y = tile.y;
+			level1Context.name = tile.getName();
+			level1Context.flip = flips;
+			level1Context.rotation = rotation;
+		}
+		
+		if (iteration % 100000000 == 0)
+		{
+			long elapsed = System.currentTimeMillis() - start + 1;
+			long rate = iteration * 1000L / (long)elapsed;
+			
+			long elapsedSec = elapsed / 1000;
+			String elapsedStr = String.format("%1$02d:%2$02d:%3$02d", (elapsedSec / (60*60)), ((elapsedSec / 60) % 60), (elapsedSec % 60));
+			String timeStr = String.format("%1$tY-%1$tm-%1$te %1$tH:%1$tM:%1$tS", new Date());
+			
+			System.out.println(timeStr + " tries: " + iteration + " rate:" + rate + " tries/s" + " elapsed: " + elapsedStr + " " + level1Context.toString());
+			System.out.println(board);
 		}
 	}
 

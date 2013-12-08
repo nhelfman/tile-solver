@@ -125,10 +125,7 @@ public class Board
 	
 	public boolean put(Tile t)
 	{
-		if (tiles.contains(t.getName()))
-		{
-			throw new IllegalStateException("attempt to put already placed tile on board");
-		}
+		verifyExist(t);
 		
 		String[][] tileBlocks = t.getBlocks();
 		int xPos = t.x;
@@ -183,9 +180,22 @@ public class Board
 			}
 		}
 		
-		tiles.add(t.getName());
+		addTile(t);
 		
 		return true;
+	}
+
+	private void addTile(Tile t)
+	{
+		tiles.add(t.getName());
+	}
+
+	private void verifyExist(Tile t)
+	{
+		if (tiles.contains(t.getName()))
+		{
+			throw new IllegalStateException("attempt to put already placed tile on board");
+		}
 	}
 	
 	public void remove(Tile t)
