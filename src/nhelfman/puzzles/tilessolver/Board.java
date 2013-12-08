@@ -8,7 +8,9 @@ public class Board
 {
 	
 	final String[][] board;
-	final Set<String> tiles = new HashSet<String>();
+//	final Set<String> tiles = new HashSet<String>();
+	final Tile[] tiles = new Tile[256];
+	
 	boolean isCheckerBoard = false;
 	
 	private void hline(StringBuilder buf)
@@ -125,7 +127,7 @@ public class Board
 	
 	public boolean put(Tile t)
 	{
-		verifyExist(t);
+		verifyNotExist(t);
 		
 		String[][] tileBlocks = t.getBlocks();
 		int xPos = t.x;
@@ -185,14 +187,20 @@ public class Board
 		return true;
 	}
 
+	
+	private int tileIndex(Tile t)
+	{
+		return t.getName().charAt(0) - '0'; 
+	}
+	
 	private void addTile(Tile t)
 	{
-		tiles.add(t.getName());
+		tiles[tileIndex(t)] = t;
 	}
 
-	private void verifyExist(Tile t)
+	private void verifyNotExist(Tile t)
 	{
-		if (tiles.contains(t.getName()))
+		if (tiles[tileIndex(t)] != null)
 		{
 			throw new IllegalStateException("attempt to put already placed tile on board");
 		}
@@ -200,7 +208,7 @@ public class Board
 	
 	public void remove(Tile t)
 	{
-		if (!tiles.contains(t.getName()))
+		if (tiles[tileIndex(t)] == null)
 		{
 			throw new IllegalStateException("attempt to remove non placed tile from board");
 		}
@@ -247,6 +255,6 @@ public class Board
 			}
 		}
 		
-		tiles.remove(t.getName());
+		tiles[tileIndex(t)] = null;
 	}
 }
