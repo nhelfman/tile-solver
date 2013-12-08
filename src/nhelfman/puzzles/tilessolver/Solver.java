@@ -11,16 +11,14 @@ public class Solver
 {
 	class Context
 	{
-		int x;
-		int y;
+		Tile tile;
 		int flip;
 		int rotation;
-		String name;
 		
 		@Override
 		public String toString()
 		{
-			return name + " [" + x + "," + y + "] flip: " + flip + " rot: " + rotation;
+			return " tile: " + tile.getName() + " [" + tile.x + "," + tile.y + "] flip: " + flip + " rot: " + rotation;
 		}
 		
 		
@@ -201,9 +199,7 @@ public class Solver
 	{
 		if (level == 1)
 		{
-			level1Context.x = tile.x;
-			level1Context.y = tile.y;
-			level1Context.name = tile.getName();
+			level1Context.tile = tile;
 			level1Context.flip = flips;
 			level1Context.rotation = rotation;
 		}
