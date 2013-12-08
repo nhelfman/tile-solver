@@ -167,7 +167,7 @@ public class Board
 			}
 		}
 		
-		// place
+		// place tile on board
 		for (int y=0; y < tileBlocks.length; y++)
 		{
 			for (int x=0; x < tileBlocks[y].length; x++)
@@ -183,6 +183,42 @@ public class Board
 		}
 		
 		addTile(t);
+		
+		// . X
+		// X
+		if (board[0][0] == null && board[0][1] != null && board[1][0] != null)
+		{
+			// single empty top left corner
+			remove(t);
+			return false;
+		}
+		
+		// X .
+		//   X
+		if (board[0][width() - 1] == null && board[0][width() - 2] != null && board[1][width() - 1] != null)
+		{
+			// single empty top right corner
+			remove(t);
+			return false;
+		}
+		
+		// X
+		// . X
+		if (board[height() - 1][0] == null && board[height() - 1][1] != null && board[height() - 2][0] != null)
+		{
+			// single empty bottom left corner
+			remove(t);
+			return false;
+		}
+		
+		//   X
+		// X .
+		if (board[height() - 1][width() - 1] == null && board[height() - 1][width() - 2] != null && board[height() - 2][width() - 1] != null)
+		{
+			// single empty bottom right corner
+			remove(t);
+			return false;
+		}
 		
 		return true;
 	}
