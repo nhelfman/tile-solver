@@ -101,9 +101,9 @@ public class Solver
 					{
 						tile.pos(x, y);
 
-						for (int flips = 0; flips < 2; flips++)
+						for (int flips = 0; flips < tile.maxFlips; flips++)
 						{
-							for (int rotation=0; rotation < 4; rotation++)
+							for (int rotation=0; rotation < tile.maxRotations; rotation++)
 							{
 								if (tilePlaced)
 								{

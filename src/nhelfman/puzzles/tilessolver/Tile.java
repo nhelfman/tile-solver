@@ -12,9 +12,19 @@ public class Tile
 	
 	public int x;
 	public int y;
-		
+	public final int maxFlips;
+	public final int maxRotations;
+	
 	public Tile(String name, String[][] blocks)
 	{
+		this(name, blocks, 2, 4);
+	}
+	
+	public Tile(String name, String[][] blocks, int maxFlips, int maxRotations)
+	{
+		this.maxFlips = maxFlips;
+		this.maxRotations = maxRotations;
+		
 		if (blocks.length == 0)
 		{
 			throw new IllegalArgumentException("height == 0");
@@ -168,7 +178,7 @@ public class Tile
 		}
 		
 		currentRot++;
-		currentRot %= 4;
+		currentRot %= maxRotations;
 		
 		blocks = rotated;
 	}

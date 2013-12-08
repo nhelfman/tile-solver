@@ -35,6 +35,7 @@ public class TGPuzzle
 				{"O",   "X",   "O"},
 				{"X" ,  null,  "X"},
 						}
+				,1 ,2 
 				);
 		
 		Tile t3 = new Tile("3",
@@ -43,6 +44,7 @@ public class TGPuzzle
 				{"O" ,  "X",   "O"},
 				{null,  "O",   null},
 						}
+				,1 ,4
 				);
 		
 		
@@ -111,6 +113,7 @@ public class TGPuzzle
 				{"O" ,  "X",  "O"},
 				{"X", null,   "X"}, 
 						}
+				,1 ,4
 				);
 		
 		Tile tC = new Tile("C",
